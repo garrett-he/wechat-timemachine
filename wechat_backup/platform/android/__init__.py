@@ -15,3 +15,4 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import wechat_backup.platform.android.context
+import wechat_backup.platform.android.contact
