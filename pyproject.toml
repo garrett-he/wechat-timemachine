@@ -19,7 +19,7 @@ classifiers = [
     "Topic :: Utilities",
 ]
 include = ["COPYING"]
-packages = [{ include = "wechat_backup" }]
+packages = [{ include = "wechat_backup", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.8,<3.12"
