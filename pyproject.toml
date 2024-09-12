@@ -25,6 +25,7 @@ packages = [{ include = "wechat_backup", from = "src" }]
 python = "^3.8,<3.12"
 
 [tool.poetry.group.dev.dependencies]
+pre-commit = "^3.3.3"
 pylint = "^2.17.5"
 pytest = "^7.4.0"
 pytest-cov = "^4.1.0"
