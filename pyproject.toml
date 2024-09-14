@@ -23,6 +23,7 @@ packages = [{ include = "wechat_backup", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.8,<3.12"
+click = "^8.1.7"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.3"
