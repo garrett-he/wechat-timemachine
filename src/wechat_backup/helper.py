@@ -1,6 +1,7 @@
 import os
 import hashlib
 import sqlite3
+from enum import Enum
 from json import JSONEncoder
 from datetime import datetime
 from dataclasses import is_dataclass
