@@ -1,54 +1,43 @@
-import os
-import sys
 import importlib
-import argparse
 import configparser
+from pathlib import Path
+
+import click
+
+from wechat_backup import __version__
+from wechat_backup.command import command_group
 
 
-def print_help():
-    usage = '''usage: wechat-backup <command> [parameters]
-To see help text, you can run:
-  wechat-backup <command> --help
-'''
-    sys.stderr.write(usage)
+def print_version(ctx: click.Context, _, value: str):
+    if not value or ctx.resilient_parsing:
+        return
+
+    click.echo(__version__)
+    ctx.exit()
 
 
-def load_config(profile):
-    filename = '%s/.wechat-backup/config.ini' % (os.getenv('HOME'))
+@click.group(commands=command_group)
+@click.option('--version', help='Show version information.', is_flag=True, callback=print_version, expose_value=False,
+              is_eager=True)
+@click.option('-p', '--profile', help='Profile to load from configurations.', type=str, metavar='NAME',
+              default='default')
+@click.pass_context
+def cli(ctx: click.Context, profile: str):
+    """A command-line tool to help user manage data in WeChat backup files."""
 
-    if not os.path.exists(filename):
-        raise Exception('configuration file "%s" for wechat-backup not found.' % filename)
+    ctx.ensure_object(dict)
+
+    profile_file = Path.home() / '.wechat-backup/profiles.ini'
+
+    if not profile_file.exists():
+        ctx.fail('Profile file not found')
 
     config = configparser.ConfigParser()
-    config.read(filename)
+    config.read(profile_file)
 
-    return {k: v for k, v in config.items(section=profile)}
-
-
-def main():
-    if len(sys.argv) < 2 or sys.argv[1][0] == '-':
-        print_help()
-        return -1
-
-    parser = argparse.ArgumentParser()
-
-    parser.add_argument('command')
-
-    # add common arguments
-    group = parser.add_argument_group('common')
-    group.add_argument('--profile', metavar='string', required=False, help='specific profile from your configurations',
-                       default='default')
-
-    command = importlib.import_module('wechat_backup.command.%s' % (sys.argv[1].replace('-', '_')))
-    command.add_arguments(parser)
-
-    args = parser.parse_args()
-
-    return command.execute(
-        config=load_config(args.profile),
-        args=args
-    )
+    ctx.obj['config'] = dict(config.items(section=profile))
+    ctx.obj['platform_module'] = importlib.import_module(f'wechat_backup.platform.{ctx.obj["config"]["platform"]}')
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    cli(obj={})  # pylint: disable=no-value-for-parameter

@@ -1,17 +1,20 @@
 import json
-import importlib
-from argparse import ArgumentParser, Namespace
-from wechat_backup.contact import *
+
+import click
+
+from wechat_backup.contact import assemble_friend, assemble_official_account, assemble_microprogram, assemble_chatroom
 from wechat_backup.helper import EntityJSONEncoder
 
 
-def add_arguments(parser: ArgumentParser):
-    parser.add_argument('--type', metavar='friend|official|microprogram|chatroom', required=False, help='type of contacts to be dumped', default='friend')
+@click.command('extract-contacts')
+@click.option('-t', '--type', 'contact_type', help='Type of contacts',
+              type=click.Choice(['friend', 'official', 'microprogram', 'chatroom']), default='friend')
+@click.pass_context
+def extract_contacts_command(ctx: click.Context, contact_type: str):
+    """Extract WeChat contacts."""
 
-
-def execute(config: dict, args: Namespace):
-    platform_module = importlib.import_module('wechat_backup.platform.%s' % config['platform'])
-    context = platform_module.context.new_context(config)
+    platform_module = ctx.obj['platform_module']
+    context = platform_module.context.new_context(ctx.obj['config'])
 
     def assemble_friend_wrapper(record: dict):
         return assemble_friend(record=record, labels=platform_module.contact.load_contact_labels(context=context))
@@ -30,7 +33,9 @@ def execute(config: dict, args: Namespace):
         'chatroom': platform_module.contact.load_chatrooms
     }
 
-    print(json.dumps([
-        assemblers[args.type](record=record)
-        for record in loaders[args.type](context=context)
-    ], indent=4, ensure_ascii=False, cls=EntityJSONEncoder))
+    data = [
+        assemblers[contact_type](record=record)
+        for record in loaders[contact_type](context=context)
+    ]
+
+    click.echo(json.dumps(data, indent=4, ensure_ascii=False, cls=EntityJSONEncoder))
