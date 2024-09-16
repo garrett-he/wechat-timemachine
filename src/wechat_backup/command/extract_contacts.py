@@ -1,6 +1,7 @@
 import json
 
 import click
+from tabulate import tabulate
 
 from wechat_backup.contact import assemble_friend, assemble_official_account, assemble_microprogram, assemble_chatroom
 from wechat_backup.helper import EntityJSONEncoder
@@ -9,8 +10,10 @@ from wechat_backup.helper import EntityJSONEncoder
 @click.command('extract-contacts')
 @click.option('-t', '--type', 'contact_type', help='Type of contacts',
               type=click.Choice(['friend', 'official', 'microprogram', 'chatroom']), default='friend')
+@click.option('-f', '--format', 'output_format', help='Format of outputs', type=click.Choice(['table', 'json']),
+              required=False, default='table')
 @click.pass_context
-def extract_contacts_command(ctx: click.Context, contact_type: str):
+def extract_contacts_command(ctx: click.Context, contact_type: str, output_format: str):
     """Extract WeChat contacts."""
 
     platform_module = ctx.obj['platform_module']
@@ -38,4 +41,7 @@ def extract_contacts_command(ctx: click.Context, contact_type: str):
         for record in loaders[contact_type](context=context)
     ]
 
-    click.echo(json.dumps(data, indent=4, ensure_ascii=False, cls=EntityJSONEncoder))
+    if output_format.lower() == 'json':
+        click.echo(json.dumps(data, indent=4, ensure_ascii=False, cls=EntityJSONEncoder))
+    else:
+        click.echo(tabulate(data, headers=['id', 'nickname', 'alias_id', 'alias_name', 'avatar', 'tags']))
