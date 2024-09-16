@@ -1,12 +1,23 @@
-from typing import Iterable
+import sqlite3
+from typing import Iterable, List
 from .context import WechatContextIos
 from wechat_backup.helper import md5_utf8, path_or_none
 from wechat_backup.message.parser import *
 from wechat_backup.context import WechatPlatform
 
 
+def find_message_db(table_name: str, db_list: List[sqlite3.Connection]):
+    for db in db_list:
+        row = db.cursor().execute("SELECT COUNT(*) AS C FROM sqlite_master WHERE type = 'table' AND name = ?",
+                                  (table_name,)).fetchone()
+        if row['C'] > 0:
+            return db
+
+
 def load_messages(context: WechatContextIos, conversation_id: str) -> Iterable[dict]:
     table_name = 'Chat_%s' % md5_utf8(conversation_id)
+
+    db = find_message_db(table_name, context.message_db)
 
     sql = f'''
             SELECT
@@ -21,7 +32,7 @@ def load_messages(context: WechatContextIos, conversation_id: str) -> Iterable[d
             ORDER BY CreateTime
             '''
 
-    return context.mm_db.cursor().execute(sql).fetchall()
+    return db.cursor().execute(sql).fetchall()
 
 
 @content_parser(platform=WechatPlatform.iOS, type=WechatMessageType.Image)
@@ -54,9 +65,11 @@ def parse_content_video(record: dict, context: WechatContextIos):
     node = etree.fromstring(record['content']).xpath('/msg/videomsg')[0]
 
     return VideoContent.content_type, VideoContent(
-        file_path=path_or_none('%s/Video/%s/%d.mp4' % (context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID'])),
+        file_path=path_or_none(
+            '%s/Video/%s/%d.mp4' % (context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID'])),
         duration=int(node.attrib['playlength']),
-        thumbnail_path=path_or_none('%s/Video/%s/%d.video_thum' % (context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID']))
+        thumbnail_path=path_or_none(
+            '%s/Video/%s/%d.video_thum' % (context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID']))
     )
 
 
@@ -94,7 +107,8 @@ def parse_appmsg_attachment(record: dict, context: WechatContextIos):
     # noinspection PyArgumentList
     return AttachmentContent.content_type, AttachmentContent(
         title=appmsg.xpath('title')[0].text,
-        file_path=path_or_none('%s/OpenData/%s/%d.%s' % (context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID'], file_ext))
+        file_path=path_or_none('%s/OpenData/%s/%d.%s' % (
+            context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID'], file_ext))
     )
 
 
@@ -115,7 +129,8 @@ def parse_appmsg_link(record: dict, context: WechatContextIos):
         title=appmsg.xpath('title')[0].text,
         description=appmsg.xpath('des')[0].text,
         url=appmsg.xpath('url')[0].text,
-        thumbnail_path=path_or_none('%s/OpenData/%s/%d.pic_thum' % (context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID']))
+        thumbnail_path=path_or_none(
+            '%s/OpenData/%s/%d.pic_thum' % (context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID']))
     )
 
 
@@ -123,8 +138,10 @@ def parse_appmsg_link(record: dict, context: WechatContextIos):
 def parse_appmsg_image(record: dict, context: WechatContextIos):
     # noinspection PyTypeChecker
     return ImageContent.content_type, ImageContent(
-        file_path=path_or_none('%s/OpenData/%s/%d.dat' % (context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID'])),
-        thumbnail_path=path_or_none('%s/OpenData/%s/%d.pic_thum' % (context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID'])),
+        file_path=path_or_none(
+            '%s/OpenData/%s/%d.dat' % (context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID'])),
+        thumbnail_path=path_or_none('%s/OpenData/%s/%d.pic_thum' % (
+            context.doc_dir, md5_utf8(record['conversation_id']), record['MesLocalID'])),
         high_definition_path=None
     )
 
