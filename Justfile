@@ -1,0 +1,28 @@
+default:
+    @just --list
+
+init:
+    uv sync
+    uv run pre-commit install
+
+build:
+    uv build
+
+deploy:
+    uv run nuitka src/wechat_timemachine/__main__.py \
+    --onefile \
+    --output-filename=wechat-timemachine \
+    --output-dir=dist \
+    --follow-imports
+
+lint:
+    uv run pylint src/ tests/
+
+publish:
+    uv publish
+
+test:
+    uv run pytest --cov=src --cov-report=term-missing
+
+tox:
+    uv run tox

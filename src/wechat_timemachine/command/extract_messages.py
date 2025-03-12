@@ -3,8 +3,8 @@ import json
 import click
 from tabulate import tabulate
 
-from wechat_backup.message.parser import assemble_message
-from wechat_backup.helper import EntityJSONEncoder
+from wechat_timemachine.helper import EntityJSONEncoder
+from wechat_timemachine.message.parser import assemble_message
 
 
 @click.command('extract-messages')

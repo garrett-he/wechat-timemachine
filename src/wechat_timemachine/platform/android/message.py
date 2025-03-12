@@ -1,8 +1,8 @@
 from typing import Iterable
+
+from wechat_timemachine.helper import md5_utf8, path_or_none
+from wechat_timemachine.message.parser import *
 from .context import WechatContextAndroid
-from wechat_backup.helper import md5_utf8, path_or_none
-from wechat_backup.message.parser import *
-from wechat_backup.context import WechatPlatform
 
 
 def load_messages(context: WechatContextAndroid, conversation_id: str) -> Iterable[dict]:

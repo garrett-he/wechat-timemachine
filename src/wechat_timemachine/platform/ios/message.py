@@ -1,9 +1,10 @@
 import sqlite3
 from typing import Iterable, List
+
+from wechat_timemachine.context import WechatPlatform
+from wechat_timemachine.helper import md5_utf8, path_or_none
+from wechat_timemachine.message.parser import *
 from .context import WechatContextIos
-from wechat_backup.helper import md5_utf8, path_or_none
-from wechat_backup.message.parser import *
-from wechat_backup.context import WechatPlatform
 
 
 def find_message_db(table_name: str, db_list: List[sqlite3.Connection]):

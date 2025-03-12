@@ -1,42 +1,50 @@
-[tool.poetry]
-name = "wechat-backup"
-version = "2.0.0"
-description = "This package provides a command-line interface tool to extract user data from WeChat backup files."
-authors = ["Garrett HE <garrett.he@hotmail.com>"]
-license = "GPL-3.0"
+[project]
+name = "wechat-timemachine"
+version = "1.0.0"
+description = "A command-line tool to extract user data from [WeChat][1] backup files."
+requires-python = ">=3.10,<3.15"
+authors = [
+    { name = "Garrett HE", email = "garrett.he@outlook.com" }
+]
 readme = "README.md"
-homepage = "https://github.com/he-yaowen/wechat-backup"
-repository = "https://github.com/he-yaowen/wechat-backup.git"
-keywords = ["wechat", "backup", "extractor"]
+license = { text = "GPL-3.0" }
+keywords = ["wechat", "backup", "timemachine"]
 classifiers = [
     "Environment :: Console",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Utilities",
 ]
-include = ["COPYING"]
-packages = [{ include = "wechat_backup", from = "src" }]
+dependencies = [
+    "biplist>=1.0.3",
+    "click>=8.3.0",
+    "lxml>=6.0.2",
+    "tabulate>=0.9.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.8,<3.12"
-click = "^8.1.7"
-tabulate = "^0.9.0"
+[project.urls]
+homepage = "https://github.com/he-yaowen/wechat-timemachine"
+repository = "https://github.com/garrett-he/wechat-timemachine.git"
 
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^3.3.3"
-pyinstaller = "^5.13.0"
-pylint = "^2.17.5"
-pytest = "^7.4.0"
-pytest-cov = "^4.1.0"
-tox = "^4.9.0"
+[project.scripts]
+wechat-timemachine = "wechat_timemachine.__main__:cli"
 
-[tool.poetry.scripts]
-wechat-backup = "wechat_backup.__main__:cli"
+[dependency-groups]
+dev = [
+    "nuitka>=2.8.4",
+    "pre-commit>=4.3.0",
+    "pylint>=4.0.2",
+    "pytest>=8.4.2",
+    "pytest-cov>=7.0.0",
+    "tox>=4.32.0",
+    "zstandard>=0.25.0",
+]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"

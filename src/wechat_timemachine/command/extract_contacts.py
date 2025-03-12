@@ -3,8 +3,12 @@ import json
 import click
 from tabulate import tabulate
 
-from wechat_backup.contact import assemble_friend, assemble_official_account, assemble_microprogram, assemble_chatroom
-from wechat_backup.helper import EntityJSONEncoder
+from wechat_timemachine.contact import (
+    assemble_friend,
+    assemble_official_account,
+    assemble_microprogram,
+    assemble_chatroom)
+from wechat_timemachine.helper import EntityJSONEncoder
 
 
 @click.command('extract-contacts')

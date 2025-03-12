@@ -1,5 +1,7 @@
-import biplist
 from typing import Iterable
+
+import biplist
+
 from .context import WechatContextIos
 
 

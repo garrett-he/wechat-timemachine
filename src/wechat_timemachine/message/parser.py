@@ -1,8 +1,10 @@
 import os
 import sys
+
 from lxml import etree
+
+from wechat_timemachine.context import WechatContext, WechatPlatform
 from .typing import *
-from wechat_backup.context import WechatContext, WechatPlatform
 
 _CONTENT_PARSERS = {}
 _APPMSG_PARSERS = {}
