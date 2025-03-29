@@ -1,3 +1,0 @@
-import wechat_timemachine.platform.android.contact
-import wechat_timemachine.platform.android.context
-import wechat_timemachine.platform.android.message

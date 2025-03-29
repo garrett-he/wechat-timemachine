@@ -1,7 +1,7 @@
 from typing import Iterable
 
-from wechat_timemachine.helper import md5_utf8, path_or_none
-from wechat_timemachine.message.parser import *
+from wechat_dumper.helper import md5_utf8, path_or_none
+from wechat_dumper.message.parser import *
 from .context import WechatContextAndroid
 
 

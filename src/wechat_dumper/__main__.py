@@ -4,8 +4,8 @@ from pathlib import Path
 
 import click
 
-from wechat_timemachine import __version__
-from wechat_timemachine.command import command_group
+from wechat_dumper import __version__
+from wechat_dumper.command import command_group
 
 
 def print_version(ctx: click.Context, _, value: str):
@@ -36,7 +36,7 @@ def cli(ctx: click.Context, profile: str):
     config.read(profile_file)
 
     ctx.obj['config'] = dict(config.items(section=profile))
-    ctx.obj['platform_module'] = importlib.import_module(f'wechat_timemachine.platform.{ctx.obj["config"]["platform"]}')
+    ctx.obj['platform_module'] = importlib.import_module(f'wechat_dumper.platform.{ctx.obj["config"]["platform"]}')
 
 
 if __name__ == '__main__':

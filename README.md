@@ -1,10 +1,10 @@
-# wechat-timemachine
+# wechat-dumper
 
-A command-line tool to extract user data from [WeChat][1] backup files.
+A command-line tool to dump user data from [WeChat][1] backup files.
 
 ## License
 
-Copyright (C) 2025 Garrett HE <garrett.he@hotmail.com>
+Copyright (C) 2025 Garrett HE <garrett.he@outlook.com>
 
 The GNU General Public License (GPL) version 3, see [COPYING](./COPYING).
 

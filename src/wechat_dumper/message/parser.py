@@ -3,7 +3,7 @@ import sys
 
 from lxml import etree
 
-from wechat_timemachine.context import WechatContext, WechatPlatform
+from wechat_dumper.context import WechatContext, WechatPlatform
 from .typing import *
 
 _CONTENT_PARSERS = {}

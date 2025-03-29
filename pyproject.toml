@@ -1,14 +1,14 @@
 [project]
-name = "wechat-timemachine"
+name = "wechat-dumper"
 version = "1.0.0"
-description = "A command-line tool to extract user data from [WeChat][1] backup files."
+description = "A command-line tool to dump user data from WeChat backup files."
 requires-python = ">=3.10,<3.15"
 authors = [
     { name = "Garrett HE", email = "garrett.he@outlook.com" }
 ]
 readme = "README.md"
 license = { text = "GPL-3.0" }
-keywords = ["wechat", "backup", "timemachine"]
+keywords = ["wechat", "backup", "dumper"]
 classifiers = [
     "Environment :: Console",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
@@ -28,11 +28,11 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://github.com/he-yaowen/wechat-timemachine"
-repository = "https://github.com/garrett-he/wechat-timemachine.git"
+homepage = "https://github.com/he-yaowen/wechat-dumper"
+repository = "https://github.com/garrett-he/wechat-dumper.git"
 
 [project.scripts]
-wechat-timemachine = "wechat_timemachine.__main__:cli"
+wechat-dumper = "wechat_dumper.__main__:cli"
 
 [dependency-groups]
 dev = [
