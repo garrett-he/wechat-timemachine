@@ -1,21 +1,21 @@
 # Architecture Document
 
 This document describes the system architecture, module relationships, and data
-flows of `wechat-dumper`.
+flows of `wechat-timemachine`.
 
 ## High-Level Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                        CLI Layer                            │
-│  wechat_dumper.__main__  +  wechat_dumper.command.*         │
+│  wechat_timemachine.__main__  +  wechat_timemachine.command.*         │
 │     (click group, profile loading, command dispatch)        │
 └────────────────────────┬────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                  Platform Abstraction Layer                 │
-│           wechat_dumper.platform.{android,ios}              │
+│           wechat_timemachine.platform.{android,ios}              │
 │     (context creation, contact loaders, message loaders)    │
 └────────────────────────┬────────────────────────────────────┘
                          │
@@ -30,14 +30,14 @@ flows of `wechat-dumper`.
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    Core Domain Layer                        │
-│  wechat_dumper.contact  +  wechat_dumper.message.*          │
+│  wechat_timemachine.contact  +  wechat_timemachine.message.*          │
 │     (assemblers, parser registry, content types)            │
 └────────────────────────┬────────────────────────────────────┘
                          │
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
 │                    Utility Layer                            │
-│         wechat_dumper.helper  +  wechat_dumper.context      │
+│         wechat_timemachine.helper  +  wechat_timemachine.context      │
 │     (JSON encoder, SQLite helper, base context, enums)      │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -46,14 +46,14 @@ flows of `wechat-dumper`.
 
 ### 1. CLI Layer
 
-**`wechat_dumper.__main__`**
+**`wechat_timemachine.__main__`**
 
 - Defines the top-level `click.Group`.
 - Loads `~/.wechat-backup/profiles.ini` via `configparser`.
-- Dynamically imports the platform module: `wechat_dumper.platform.<platform>`.
+- Dynamically imports the platform module: `wechat_timemachine.platform.<platform>`.
 - Stores config and platform module in `ctx.obj` for subcommands.
 
-**`wechat_dumper.command.extract_contacts`**
+**`wechat_timemachine.command.extract_contacts`**
 
 - `extract-contacts` command.
 - Options: `--type` (`friend`, `official`, `microprogram`, `chatroom`),
@@ -62,7 +62,7 @@ flows of `wechat-dumper`.
 - For `friend`, wraps `assemble_friend` with labels.
 - Outputs via `tabulate` or `json.dumps`.
 
-**`wechat_dumper.command.extract_messages`**
+**`wechat_timemachine.command.extract_messages`**
 
 - `extract-messages` command.
 - Options: `--conversation-id` (required), `--format` (`table`, `json`).
@@ -89,7 +89,7 @@ Each platform subpackage (`android/`, `ios/`) contains three modules:
 - `load_chatrooms(context) -> Iterable[dict]`
 
 All return raw dicts with keys expected by assemblers in
-`wechat_dumper.contact`.
+`wechat_timemachine.contact`.
 
 #### `message.py`
 
@@ -114,14 +114,14 @@ All return raw dicts with keys expected by assemblers in
 
 ### 3. Core Domain Layer
 
-**`wechat_dumper.contact`**
+**`wechat_timemachine.contact`**
 
 - Dataclasses: `Contact`, `Friend`, `OfficialAccount`, `Microprogram`,
   `Chatroom`.
 - Assembler functions that transform raw dicts into dataclasses.
 - `assemble_friend` requires a `labels: dict` mapping to resolve tag names.
 
-**`wechat_dumper.message.typing`**
+**`wechat_timemachine.message.typing`**
 
 - `MessageType` enum (string-based, for output).
 - `Message` dataclass.
@@ -132,7 +132,7 @@ All return raw dicts with keys expected by assemblers in
 - Some dataclasses have `__post_init__` validation (e.g., `ImageContent`
   requires at least one path).
 
-**`wechat_dumper.message.parser`**
+**`wechat_timemachine.message.parser`**
 
 - `WechatMessageType` enum (int-based, maps to WeChat internal type codes).
 - `WechatAppmsgType` enum (int-based, subtypes for application messages).
@@ -145,12 +145,12 @@ All return raw dicts with keys expected by assemblers in
 
 ### 4. Utility Layer
 
-**`wechat_dumper.context`**
+**`wechat_timemachine.context`**
 
 - `WechatPlatform` enum: `All`, `iOS`, `Android`.
 - `WechatContext` base dataclass: `platform`, `user_id`, `emoji_cache`.
 
-**`wechat_dumper.helper`**
+**`wechat_timemachine.helper`**
 
 - `sqlite_connect(path) -> sqlite3.Connection` — opens DB with `dict_factory`
   row factory.
@@ -258,7 +258,7 @@ All return raw dicts with keys expected by assemblers in
 ## File Structure
 
 ```
-src/wechat_dumper/
+src/wechat_timemachine/
 ├── __init__.py              # Version string
 ├── __main__.py              # CLI entry point (click group)
 ├── context.py               # WechatPlatform enum, WechatContext base class

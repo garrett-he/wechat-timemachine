@@ -1,5 +1,5 @@
 [project]
-name = "wechat-dumper"
+name = "wechat-timemachine"
 version = "1.0.0"
 description = "A command-line tool to dump user data from WeChat backup files."
 requires-python = ">=3.10,<3.15"
@@ -28,11 +28,11 @@ dependencies = [
 ]
 
 [project.urls]
-homepage = "https://github.com/he-yaowen/wechat-dumper"
-repository = "https://github.com/garrett-he/wechat-dumper.git"
+homepage = "https://github.com/he-yaowen/wechat-timemachine"
+repository = "https://github.com/garrett-he/wechat-timemachine.git"
 
 [project.scripts]
-wechat-dumper = "wechat_dumper.__main__:cli"
+wechat-timemachine = "wechat_timemachine.__main__:cli"
 
 [dependency-groups]
 dev = [

@@ -1,7 +1,7 @@
 # Design Document
 
 This document captures the design decisions, patterns, and rationale behind
-`wechat-dumper`.
+`wechat-timemachine`.
 
 ## Goals
 

@@ -9,9 +9,9 @@ build:
     uv build
 
 deploy:
-    uv run nuitka src/wechat_dumper/__main__.py \
+    uv run nuitka src/wechat_timemachine/__main__.py \
     --onefile \
-    --output-filename=wechat-dumper \
+    --output-filename=wechat-timemachine \
     --output-dir=dist \
     --follow-imports
 

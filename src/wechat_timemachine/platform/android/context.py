@@ -1,8 +1,8 @@
 import sqlite3
 from dataclasses import dataclass
 
-from wechat_dumper.context import WechatPlatform, WechatContext
-from wechat_dumper.helper import sqlite_connect
+from wechat_timemachine.context import WechatPlatform, WechatContext
+from wechat_timemachine.helper import sqlite_connect
 
 
 @dataclass

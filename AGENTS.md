@@ -1,4 +1,4 @@
-# Agent Guide for wechat-dumper
+# Agent Guide for wechat-timemachine
 
 Quick reference for AI agents working on this codebase. For design rationale,
 see [docs/design.md](docs/design.md). For system architecture and data flows,
@@ -33,10 +33,10 @@ just deploy  # nuitka single-file binary
 
 | Directory                             | Purpose                            |
 |---------------------------------------|------------------------------------|
-| `src/wechat_dumper/command/`          | CLI commands (click)               |
-| `src/wechat_dumper/message/`          | Message types and parser registry  |
-| `src/wechat_dumper/platform/android/` | Android DB queries and media paths |
-| `src/wechat_dumper/platform/ios/`     | iOS DB queries, plist/blob parsing |
+| `src/wechat_timemachine/command/`          | CLI commands (click)               |
+| `src/wechat_timemachine/message/`          | Message types and parser registry  |
+| `src/wechat_timemachine/platform/android/` | Android DB queries and media paths |
+| `src/wechat_timemachine/platform/ios/`     | iOS DB queries, plist/blob parsing |
 
 ## Platform Module Contract
 
@@ -58,9 +58,9 @@ Register parsers with decorators. Platform-specific parsers override generic
 ones.
 
 ```python
-from wechat_dumper.message.parser import content_parser, appmsg_parser
-from wechat_dumper.context import WechatPlatform
-from wechat_dumper.message.parser import WechatMessageType
+from wechat_timemachine.message.parser import content_parser, appmsg_parser
+from wechat_timemachine.context import WechatPlatform
+from wechat_timemachine.message.parser import WechatMessageType
 
 
 @content_parser(platform=WechatPlatform.Android, type=WechatMessageType.Image)

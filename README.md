@@ -1,4 +1,4 @@
-# wechat-dumper
+# wechat-timemachine
 
 A command-line tool to dump user data from [WeChat][1] backup files.
 
@@ -22,7 +22,7 @@ A command-line tool to dump user data from [WeChat][1] backup files.
 ### From PyPI
 
 ```bash
-pip install wechat-dumper
+pip install wechat-timemachine
 ```
 
 ### From Source
@@ -56,13 +56,13 @@ emoji_cache = /path/to/emoji/cache
 
 ```bash
 # Extract contacts (default: friends, table output)
-wechat-dumper extract-contacts
+wechat-timemachine extract-contacts
 
 # Extract official accounts as JSON
-wechat-dumper extract-contacts --type official --format json
+wechat-timemachine extract-contacts --type official --format json
 
 # Extract messages from a conversation
-wechat-dumper extract-messages --conversation-id friend_wechat_id --format json
+wechat-timemachine extract-messages --conversation-id friend_wechat_id --format json
 ```
 
 Use `--profile <name>` to select a non-default profile.
@@ -89,7 +89,7 @@ just deploy
 ## Project Structure
 
 ```
-src/wechat_dumper/
+src/wechat_timemachine/
 ├── __main__.py              # CLI entry point
 ├── context.py               # Platform enum and base context
 ├── contact.py               # Contact domain models and assemblers
