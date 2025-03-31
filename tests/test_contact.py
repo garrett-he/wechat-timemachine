@@ -1,4 +1,3 @@
-import pytest
 
 from wechat_timemachine.contact import (
     assemble_chatroom,

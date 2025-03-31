@@ -91,7 +91,7 @@ def load_microprograms(context: WechatContextAndroid) -> Iterable[dict]:
 
 
 def load_chatrooms(context: WechatContextAndroid) -> Iterable[dict]:
-    sql = f'''
+    sql = '''
         SELECT
             r.username AS id,
             CASE WHEN r.alias = '' THEN NULL ELSE r.alias END AS id_alias, r.nickname AS nickname,

@@ -5,7 +5,6 @@ import wechat_timemachine.platform.ios.message  # noqa: F401
 
 import pytest
 
-from wechat_timemachine.context import WechatPlatform
 from wechat_timemachine.message.parser import assemble_message
 from wechat_timemachine.message.typing import (
     EmojiContent,

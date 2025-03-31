@@ -12,14 +12,14 @@ JSON.
 
 ## Tech Stack
 
-- Python 3.10–3.14, `uv`, `just`, `click`, `pytest`, `pylint`, `hatchling`
+- Python 3.10–3.14, `uv`, `just`, `click`, `pytest`, `ruff`, `hatchling`
 
 ## Quick Commands
 
 ```bash
-just init    # uv sync + pre-commit install
+just init    # uv sync
 just test    # pytest with coverage
-just lint    # pylint src/ tests/
+just lint    # ruff check src/ tests/
 just build   # uv build
 just deploy  # nuitka single-file binary
 ```
@@ -27,7 +27,7 @@ just deploy  # nuitka single-file binary
 ## Code Style
 
 - 4-space indent, 160 char line limit, LF endings, double quotes
-- Docstrings not required (disabled in pylint)
+- Docstrings not required (disabled in ruff)
 
 ## Key Directories
 

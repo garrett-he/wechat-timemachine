@@ -1,4 +1,3 @@
-import pytest
 
 from wechat_timemachine.context import WechatPlatform
 from wechat_timemachine.message.typing import (
@@ -77,9 +76,6 @@ class TestIosParseContactRows:
         # dbContactHeadImage for non-gh friend: first byte != 8, second byte = length of thumbnail_url
         # structure: [flag, thumb_len, thumb_url, ..., avatar_len, avatar_url]
         # Simplified valid blob for regular user based on code path
-        thumb_url = b"http://thumb"
-        avatar_url = b"http://avatar"
-        head_img = bytes([0, len(thumb_url)]) + thumb_url + bytes([0, 0, 0, len(avatar_url)]) + avatar_url
         # This is a rough approximation; the actual parsing depends on byte layout.
         # Let's build a simpler test using the gh_ path instead.
 

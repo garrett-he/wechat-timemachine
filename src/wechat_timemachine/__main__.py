@@ -40,4 +40,4 @@ def cli(ctx: click.Context, profile: str):
 
 
 if __name__ == '__main__':
-    cli(obj={})  # pylint: disable=no-value-for-parameter
+    cli(obj={})

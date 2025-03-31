@@ -1,7 +1,6 @@
-import pytest
 
 from wechat_timemachine.context import WechatPlatform
-from wechat_timemachine.message.typing import EmojiContent, ImageContent, VideoContent, VoiceContent, VoIPContent
+from wechat_timemachine.message.typing import EmojiContent, ImageContent, VideoContent, VoIPContent
 from wechat_timemachine.message.parser import (
     WechatAppmsgType,
     WechatMessageType,

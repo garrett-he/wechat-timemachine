@@ -92,7 +92,7 @@ def load_contact_labels(context: WechatContextIos) -> dict:
 
 
 def load_friends(context: WechatContextIos) -> Iterable[dict]:
-    sql = f'''
+    sql = '''
             SELECT
                 userName AS id,
                 encodeUserName AS encrypt_id,
@@ -128,7 +128,7 @@ def load_friends(context: WechatContextIos) -> Iterable[dict]:
 
 
 def load_official_accounts(context: WechatContextIos) -> Iterable[dict]:
-    sql = f'''
+    sql = '''
         SELECT
             userName AS id,
             encodeUserName AS encrypt_id,
@@ -142,7 +142,7 @@ def load_official_accounts(context: WechatContextIos) -> Iterable[dict]:
 
 
 def load_microprograms(context: WechatContextIos) -> Iterable[dict]:
-    sql = f'''
+    sql = '''
         SELECT
             userName AS id,
             encodeUserName AS encrypt_id,
@@ -156,7 +156,7 @@ def load_microprograms(context: WechatContextIos) -> Iterable[dict]:
 
 
 def load_chatrooms(context: WechatContextIos) -> Iterable[dict]:
-    sql = f'''
+    sql = '''
         SELECT
             userName AS id,
             encodeUserName AS encrypt_id,

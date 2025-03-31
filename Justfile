@@ -3,7 +3,6 @@ default:
 
 init:
     uv sync
-    uv run pre-commit install
 
 build:
     uv build
@@ -16,7 +15,7 @@ deploy:
     --follow-imports
 
 lint:
-    uv run pylint src/ tests/
+    uv run ruff check src/ tests/
 
 publish:
     uv publish
@@ -24,5 +23,5 @@ publish:
 test:
     uv run pytest --cov=src --cov-report=term-missing
 
-tox:
-    uv run tox
+format:
+    uv run ruff format src/ tests/

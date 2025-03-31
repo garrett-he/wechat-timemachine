@@ -1,12 +1,10 @@
 import json
-import os
 import sqlite3
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
 
-import pytest
 
 from wechat_timemachine.helper import (
     EntityJSONEncoder,
