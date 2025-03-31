@@ -12,7 +12,7 @@ JSON.
 
 ## Tech Stack
 
-- Python 3.10–3.14, `uv`, `just`, `click`, `pytest`, `ruff`, `hatchling`
+- Python 3.10–3.14, `uv`, `just`, `typer`, `pytest`, `ruff`, `hatchling`
 
 ## Quick Commands
 
@@ -33,7 +33,7 @@ just deploy  # nuitka single-file binary
 
 | Directory                             | Purpose                            |
 |---------------------------------------|------------------------------------|
-| `src/wechat_timemachine/command/`          | CLI commands (click)               |
+| `src/wechat_timemachine/command/`          | CLI commands (typer)               |
 | `src/wechat_timemachine/message/`          | Message types and parser registry  |
 | `src/wechat_timemachine/platform/android/` | Android DB queries and media paths |
 | `src/wechat_timemachine/platform/ios/`     | iOS DB queries, plist/blob parsing |

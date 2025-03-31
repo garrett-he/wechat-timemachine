@@ -9,7 +9,7 @@ flows of `wechat-timemachine`.
 ┌─────────────────────────────────────────────────────────────┐
 │                        CLI Layer                            │
 │  wechat_timemachine.__main__  +  wechat_timemachine.command.*         │
-│     (click group, profile loading, command dispatch)        │
+│     (typer app, callback, profile loading, command dispatch)│
 └────────────────────────┬────────────────────────────────────┘
                          │
                          ▼
@@ -48,7 +48,7 @@ flows of `wechat-timemachine`.
 
 **`wechat_timemachine.__main__`**
 
-- Defines the top-level `click.Group`.
+- Defines the top-level `typer.Typer` app with a callback.
 - Loads `~/.wechat-backup/profiles.ini` via `configparser`.
 - Dynamically imports the platform module: `wechat_timemachine.platform.<platform>`.
 - Stores config and platform module in `ctx.obj` for subcommands.
